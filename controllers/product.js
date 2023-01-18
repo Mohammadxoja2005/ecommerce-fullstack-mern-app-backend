@@ -12,14 +12,19 @@ class Product {
       ],
     });
     res.json(oneProduct);
-  } 
+  }
 
-  async getAllProductsByCategory(req,res) {
-    const {category_id} = req.body;   
-     
-    const getAllProductsByCategory = await product.findAll({where: {category_id: category_id}});   
+  async getAllProductsByCategory(req, res) {
+    const { category_id, type_id } = req.query;
 
-    res.json(getAllProductsByCategory); 
+    const getAllProductsByCategory = await product.findAll({
+      where: { category_id: category_id, type_id: type_id },
+      include: [
+        { model: image }
+      ]
+    });
+
+    res.json(getAllProductsByCategory);
   }
 
   async createProduct(req, res) {
